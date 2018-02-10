@@ -12,5 +12,9 @@
     "sdk"
   ],
   "author": "jsonzhou",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzyss86/mi-aqara-sdk.git"
+  },
   "license": "ISC"
 }
