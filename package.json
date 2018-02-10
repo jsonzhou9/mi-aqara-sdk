@@ -1,0 +1,16 @@
+{
+  "name": "mi-aqara-sdk",
+  "version": "1.0.0",
+  "description": "xiaomi & aqara sdk",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "mijia",
+    "aqara",
+    "xiaomi",
+    "sdk"
+  ],
+  "author": "jsonzhou",
+  "license": "ISC"
+}
