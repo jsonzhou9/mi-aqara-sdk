@@ -106,7 +106,7 @@ class MiAqara {
             return;
         }
         let cmd = data['cmd'];
-        console.log('[Message] cmd: %s, msg: ', cmd, msg.toString());
+        // console.log('[Message] cmd: %s, msg: ', cmd, msg.toString());
 
         if (cmd === 'iam') { // whois callback
             this.gatewayHelper.uploadBySid(data.sid, data);

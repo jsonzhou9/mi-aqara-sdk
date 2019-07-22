@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "xiaomi & aqara sdk",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "mijia",
     "aqara",
@@ -16,5 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/zzyss86/mi-aqara-sdk.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cosmos": "^3.0.3",
+    "documentdb": "^1.15.3"
+  }
 }
