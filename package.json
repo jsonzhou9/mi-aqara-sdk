@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "xiaomi & aqara sdk",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node main"
+  },
   "keywords": [
     "mijia",
     "aqara",
