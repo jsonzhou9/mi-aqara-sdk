@@ -1,4 +1,4 @@
-const MiAqara = require('./mi-skd');
+const MiAqara = require('./mi-sdk');
 const CosmosDB = require('./cosmosdb');
 const config = require('./config');
 

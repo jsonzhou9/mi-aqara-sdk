@@ -1,14 +1,13 @@
 const CosmosClient = require('@azure/cosmos').CosmosClient;
-const FileSystem = require("fs");
-const config = JSON.parse(FileSystem.readFileSync("config.json"))
-const client = new CosmosClient({endpoint: config.cosmosDB.endpoint, key: config.cosmosDB.key});
+const config = require('./config');
+const client = new CosmosClient({ endpoint: config.cosmosDB.endpoint, key: config.cosmosDB.key });
 
-const databaseId  = config.cosmosDB.database;
+const databaseId = config.cosmosDB.database;
 const containerId = config.cosmosDB.container;
 const partitionKey = { kind: "Hash", paths: ["/id"] };
 
 async function createDatabase() {
-    const { database } = await client.databases.createIfNotExists({id: databaseId});
+    const { database } = await client.databases.createIfNotExists({ id: databaseId });
     console.log(`Created database:${database.id}`);
 }
 
@@ -28,16 +27,16 @@ async function exit(message) {
 
 var init = false;
 module.exports = {
-    CreateOrUpdateItem(item){
-        if (!init){
+    CreateOrUpdateItem(item) {
+        if (!init) {
             createDatabase()
-            .then(() => createContainer())
-            .then(() => createFamilyItem(item))
-            .then(() => { exit(`Completed successfully`); })
-            .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
+                .then(() => createContainer())
+                .then(() => createFamilyItem(item))
+                .then(() => { exit(`Completed successfully`); })
+                .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
             init = true
         }
-        else{
+        else {
             createFamilyItem(item)
                 .then(() => { exit(`Completed successfully`); })
                 .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });

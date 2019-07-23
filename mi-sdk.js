@@ -3,19 +3,19 @@ const MiAqara = require('./libs/MiAqara');
 let miAqaraSDK = {
     _miAqara: null,
     _start: false,
-    create (gateways, opts) {
+    create(gateways, opts) {
         this._miAqara = new MiAqara(gateways, opts);
         this.extend();
     },
-    start () {
+    start() {
         this._miAqara.start();
         this._start = true;
     },
-    extend () { // 初始化后再添加更多接口
+    extend() { // 初始化后再添加更多接口
         let miAqara = this._miAqara;
         let gatewayHelper = miAqara.gatewayHelper;
         let deviceHelper = miAqara.deviceHelper;
-        
+
         this.parser = miAqara.parser;
         this.getGatewayBySid = gatewayHelper.getBySid.bind(gatewayHelper);
         this.getGatewayList = gatewayHelper.getGatewayList.bind(gatewayHelper);
