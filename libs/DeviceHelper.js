@@ -102,6 +102,12 @@ class DeviceHelper {
         return deviceList;
     }
 
+    refresh(){
+        for(let key in this.devices){
+            this.read(key)
+        }
+    }
+
     getDeviceList () {
         let deviceList = [];
         for (let key in this.devices) {

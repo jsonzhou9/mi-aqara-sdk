@@ -38,6 +38,7 @@ class MiAqara {
         this.gatewayHelper = new GatewayHelper(this);
         this.deviceHelper = new DeviceHelper(this);
         this.parser = DeviceParser;
+        this.serverSocket = null;
 
         if (Array.isArray(gateways)) {
             for (let i=0; i<gateways.length; i++) {
@@ -73,25 +74,20 @@ class MiAqara {
     }
 
     initServerSocket () {
-        let serverSocket = this.serverSocket;
-        let that = this;
-
-        serverSocket.on('error', function(err){
+        this.serverSocket.on('error', function(err){
             console.error('error, msg - %s, stack - %s\n', err.message, err.stack);
         });
 
-        serverSocket.on('listening', function(){
-            console.info(`server is listening on port ${that.serverPort}.`);
-            if (!that.bindAddress) {
-                serverSocket.addMembership(that.multicastAddress);
-            } else {
-                serverSocket.setMulticastInterface(that.bindAddress);
-                serverSocket.addMembership(that.multicastAddress, that.bindAddress);
-            }
+        this.serverSocket.on('listening', function(){
+            let server = this.address()
+            console.info(`server is listening on port ${server.port}.`);
         });
-        serverSocket.on('message', this.parseMessage.bind(this));
 
-        serverSocket.bind(this.serverPort);
+        this.serverSocket.on('message', this.parseMessage.bind(this));
+
+        this.serverSocket.bind(this.serverPort, () => {
+            this.serverSocket.addMembership(this.multicastAddress);
+        });
     }
 
     parseMessage (msg, rinfo) {
@@ -127,7 +123,7 @@ class MiAqara {
         } else if (cmd === 'write_ack') { // write callback
             this._addOrUpdate(data);
         } else if(cmd === 'server_ack') { // 网关通用回复, 如发送报文JSON解析出错，会回复此事件
-            // todo
+            console.error('server ack: %s', msg);
         } else if (cmd === 'heartbeat') {  // 心跳包
             /**
              * 网关每10秒钟发送一次, 主要更新网关token

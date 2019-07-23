@@ -1,31 +1,25 @@
 const CosmosClient = require('@azure/cosmos').CosmosClient;
+const FileSystem = require("fs");
+const config = JSON.parse(FileSystem.readFileSync("config.json"))
+const client = new CosmosClient({endpoint: config.cosmosDB.endpoint, key: config.cosmosDB.key});
 
-const host = "";
-const masterKey = "";
-const client = new CosmosClient({endpoint: host, key: masterKey});
-
-const databaseId  = "WCDevice";
-const containerId = "XiaomiDeviceData";
+const databaseId  = config.cosmosDB.database;
+const containerId = config.cosmosDB.container;
 const partitionKey = { kind: "Hash", paths: ["/id"] };
 
 async function createDatabase() {
     const { database } = await client.databases.createIfNotExists({id: databaseId});
-    console.log(`Created database:\n${database.id}\n`);
+    console.log(`Created database:${database.id}`);
 }
 
 async function createContainer() {
     const { container } = await client.database(databaseId).containers.createIfNotExists({ id: containerId, partitionKey }, { offerThroughput: 400 });
-    console.log(`Created container:\n${container.id}\n`);
-}
-
-async function readContainer() {
-    const { body: containerDefinition } = await client.database(databaseId).container(containerId).read();
-  console.log(`Reading container:\n${containerDefinition.id}\n`);
+    console.log(`Created container:${container.id}`);
 }
 
 async function createFamilyItem(itemBody) {
     const { item } = await client.database(databaseId).container(containerId).items.upsert(itemBody);
-    console.log(`Created family item with id:\n${itemBody.id}\n`);
+    console.log(`Created or update item with id:${itemBody.id}`);
 };
 
 async function exit(message) {

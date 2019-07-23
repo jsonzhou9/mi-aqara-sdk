@@ -26,6 +26,7 @@ let miAqaraSDK = {
         this.getDevicesByModel = deviceHelper.getDevicesByModel.bind(deviceHelper);
         this.getDeviceList = deviceHelper.getDeviceList.bind(deviceHelper);
         this.change = deviceHelper.change.bind(deviceHelper);
+        this.refresh = deviceHelper.refresh.bind(deviceHelper)
     }
 };
 
