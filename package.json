@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@azure/cosmos": "^3.0.3",
-    "documentdb": "^1.15.3"
+    "documentdb": "^1.15.3",
+    "dotenv": "^8.0.0"
   }
 }
